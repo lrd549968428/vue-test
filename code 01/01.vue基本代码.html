@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 1. 导入Vue的依赖 -->
+    <script src="./lib/vue-2.6.14.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+<div id="app">
+    <h4 v-text="msg">==================</h4>
+    <!-- 默认 v-text 是没有闪烁问题的 -->
+    <!-- v-text会覆盖元素中原本的内容，但是 插值表达式  只会替换自己的这个占位符，不会把 整个元素的内容清空 -->
+
+    <div>{{msg2}}</div>
+    <div v-text="msg2"></div>
+    <div v-html="msg2">1212112</div>
+
+    <!-- v-bind: 是 Vue中，提供的用于绑定属性的指令 -->
+    <!-- <input type="button" value="按钮" v-bind:title="mytitle + '123'" /> -->
+    <!-- 注意： v-bind: 指令可以被简写为 :要绑定的属性 -->
+    <!-- v-bind 中，可以写合法的JS表达式 -->
+
+    <!-- Vue 中提供了 v-on: 事件绑定机制 -->
+    <input
+            type="button"
+            value="按钮"
+            :title="mytitle + '123'"
+            v-on:click="show"
+    />
+    <!-- 必须传一个fucntion -->
+    <input type="button" value="按钮" @click="show"/>
+</div>
+
+<script>
+    /* document.getElementById('btn').onclick = function(){
+    alert('Hello')
+  } */
+    //  将来 new 的Vue实例，会控制这个 元素中的所有内容
+    //   Vue 实例所控制的这个元素区域，就是我们的 V
+    const vm = new Vue({
+        el: "#app", // 表示，当前我们 new 的这个 Vue 实例，要控制页面上的哪个区域
+        data: {
+            // 这里的 data 就是 MVVM中的 M，专门用来保存 每个页面的数据的
+            msg: "123", // data 属性中，存放的是 el 中要用到的数据
+            msg2: "<h1>这是一个很大的H1</h1>", // 通过 Vue 提供的指令，很方便的就能把数据渲染到页面上
+            mytitle: "这是一个自己定义的title",
+        },
+        methods: {
+            // 这个 methods属性中定义了当前Vue实例所有可用的方法
+            show: function () {
+                alert("Hello");
+            },
+        },
+    });
+</script>
+</body>
+</html>
